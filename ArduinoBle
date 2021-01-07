@@ -1,0 +1,86 @@
+In this tutorial, I basically repeat an implement a small experiment run in Arduino.
+Basically Arduino does a Gesture Recognition using ML algorithms.
+The following should be ran using Google Colab.
+
+#1.Setup Python Environment.
+
+!apt-get -qq install xxd
+!pip install pandas numpy matplotlib
+!pip install tensorflow==2.0.0-rc1
+
+Upload Data
+1.Previous to this process you should have collected the data by using Arduino BLE and properlly put in CSV files.
+2.Open the data an upload it in Colab
+3.Drag punch.csv and flex.csv files from your computer.
+
+
+Graph Data(optional)
+Data willl be procesed and splitted into acceleration and gyroscope, as each data set has different units and scale.
+
+import matplotlib.pyplot as plt #import libraries to matimatically express whats in the data
+import numpy as np
+import pandas as pd
+
+filename = " punch.csv"
+df = pd.read_csv("/content/“ + filename)
+index = range(1, len(df['aX]) + 1)
+plt.rcParams["figure.figsize"] = (20, 10) #figuresizeParams
+
+plt.plot(index, df['aX'], 'g.', label ='x', linestyle='solid', marker=',')
+plt.plot(index, df['aY'], 'b.', label ='y', linestyle='solid', marker=',')
+plt.plot(index, df['aZ'], 'r.', label ='z', linestyle='solid', marker=',')
+plt.title("Acceleration")
+plt.xlabel("Sample #”)
+plt.ylabel("Acceleration (G)")
+plt.legend()
+plt.show()
+
+plt.plot(index, df['gX'], 'g.', label='x', linestyle ='solid', marker =’,’)
+plt.plot(index, df['gY'], 'b.', label ='y', linestyle ='solid', marker =’,’)
+plt.plot(index, df['gZ'], 'r.', label ='z', linestyle ='solid', marker =’,’)
+plt.title("Gyroscope")
+plt.xlabel("Sample #")
+plt.ylabel("Gyroscope (deg/sec)")
+plt.legend()
+plt.show()
+
+Train Neuronal Network
+
+Parse and prepare the data
+The next cell parses the csv files and transforms them to a format that will be used to train the fully connected
+neural network
+Update the GESTURES list with the gesture data you've collected in .csv format.
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import tensorflow as tf
+
+print(f"TensorFlow version = {tf._version_]\n")
+
+#Set a fixed random seed value, for reproducibility, this will allow us to seed the same random numbers
+each time the notebook is run
+
+SEED = 1337
+np.random.seed(SEED)
+tf.random.set_seed(SEED)
+
+#the list of gestures that data is available for 
+GESTURES = [
+             'punch', 'flex',]
+             
+SAMPLES_PER_GESTURE = 119
+NUM_GESTURES = len(GESTURES)
+
+#create a one-hot encoded matrix that is used ine the output
+ONE_HOT_ENCODED_GESTURES = np.eye(NUM_GESTURES)
+
+inputs = []
+outputs = []
+
+# read each csv file and push an input and output
+for gesture_index in range(NUM_GESTURES):
+    gesture
+
+
+
